@@ -3,24 +3,15 @@ pipeline {
   tools {
     nodejs 'nodeJS2390'
   }
-  stages{
-    stage("deployment_to_dev ") {
-      when {
-        expression { return env.BRANCH_NAME == 'feature_1' }
+  stages {
+    stage ("npm dependencies install") {
+      steps {
+        echo "install dependencies..."
+        sh 'npm install --no-audit'
+      }
     }
-    steps {
-        echo 'Deploying to developemnt...'
-    }
+  }
 
-      
-    }
-stage("deployment_to_PROD ") {
-      when {
-        expression { return env.BRANCH_NAME == 'main' }
-    }
-    steps {
-        echo 'Deploying to production...'
-    }
 
       
     }
