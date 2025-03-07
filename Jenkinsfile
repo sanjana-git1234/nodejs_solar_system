@@ -4,10 +4,15 @@ pipeline {
     nodejs 'nodeJS2390'
   }
   stages{
-    stage("npm version") {
-      steps {
-        sh "npm --version"
-      }
+    stage("deployment") {
+      when {
+        expression { return env.BRANCH_NAME == 'main' }
+    }
+    steps {
+        echo 'Deploying to production...'
+    }
+
+      
     }
   }
 }
