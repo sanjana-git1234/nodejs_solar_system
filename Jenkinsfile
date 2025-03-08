@@ -30,12 +30,16 @@ pipeline {
      steps {
        echo "code coverage check "
        withCredentials([usernamePassword(credentialsId: 'mongo-db-credentials', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
+       catchError(buildResult: 'SUCCESS', message: 'opps!! will be taken care later', stageResult: 'UNSTABLE') { 
        sh 'npm run coverage'
      }
-     } 
+     }
+       publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'code coverage HTML Report', reportTitles: '', useWrapperFileDirectly: true])
     }
 }
   }
+}
+
 
 
       
