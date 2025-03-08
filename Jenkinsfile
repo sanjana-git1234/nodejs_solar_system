@@ -5,6 +5,9 @@ pipeline {
   }
   environment {
   MONGO_URI = "mongodb+srv://supercluster.d83jj.mongodb.net/superData"
+  MONGO_DB_CREDS = credentials ('mongo-db-credentials')
+  MONGO_USERNAME = credentials ('mongo_username')
+  MONGO_PASSWORD = credentials ('mongo_password')
 }
 
   stages {
@@ -19,21 +22,22 @@ pipeline {
       stage ("unit testing") {
        steps {
          echo "do unit test"
-         withCredentials([usernamePassword(credentialsId: 'mongo-db-credentials', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
+         sh 'colon separated - $MONGO_DB_CREDS'
+         sh 'echo username - $MONGO_DB_CREDS_USR'
+         sh 'echo password - $MONGO_DB_CREDS_PSW'
          sh 'npm test'
+         
        }
          junit allowEmptyResults: true, skipPublishingChecks: true, testResults: 'test-results.xml'
-       }
-        
       }
     stage ("code coverage") {
      steps {
        echo "code coverage check "
-       withCredentials([usernamePassword(credentialsId: 'mongo-db-credentials', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
+      
        catchError(buildResult: 'SUCCESS', message: 'opps!! will be taken care later', stageResult: 'UNSTABLE') { 
        sh 'npm run coverage'
      }
-     }
+     
        publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'code coverage HTML Report', reportTitles: '', useWrapperFileDirectly: true])
        
     }
