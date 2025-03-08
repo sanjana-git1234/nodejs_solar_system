@@ -30,6 +30,13 @@ pipeline {
   }
   }
 }
+      stage ("unit testing") {
+       steps {
+         echo "do unit test"
+         sh 'npm test'
+       }
+        
+      }
 }
   }
 }
