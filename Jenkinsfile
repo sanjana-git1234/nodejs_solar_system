@@ -22,10 +22,18 @@ pipeline {
          withCredentials([usernamePassword(credentialsId: 'mongo-db-credentials', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
          sh 'npm test'
        }
-         //junit allowEmptyResults: true, skipPublishingChecks: true, testResults: 'test-results.xml'
+         junit allowEmptyResults: true, skipPublishingChecks: true, testResults: 'test-results.xml'
        }
         
       }
+    stage ("code coverage") {
+     steps {
+       echo "code coverage check "
+       withCredentials([usernamePassword(credentialsId: 'mongo-db-credentials', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
+       sh 'npm run coverage'
+     }
+     } 
+    }
 }
   }
 
