@@ -30,6 +30,7 @@ pipeline {
   }
   }
 }
+    }
       stage ("unit testing") {
        steps {
          echo "do unit test"
@@ -39,7 +40,7 @@ pipeline {
       }
 }
   }
-}
+
 
       
  
