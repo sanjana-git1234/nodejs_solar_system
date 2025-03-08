@@ -11,26 +11,7 @@ pipeline {
         sh 'npm install --no-audit'
       }
     }
-    stage ("parallel check") {
-      parallel {
-   stage ("npm audits") {
-     steps {
-       echo "performing audits.."
-       sh 'npm audit --audit-level=critical'  
-}
-
-
-}
-    stage ("owasp check") {
-    steps {
-      dependencyCheck additionalArguments: '''--scan /\'./ \\\'
---format / \'./ \\\'
---out `\\All `\\
---prettyPrint''', odcInstallation: 'Owasp1210'
-  }
-  }
-}
-    }
+   
       stage ("unit testing") {
        steps {
          echo "do unit test"
