@@ -13,7 +13,7 @@ pipeline {
   stages {
     stage ("npm dependencies install") {
       steps {
-        echo "install dependenciesi..."
+        echo "install dependenciesi...hiiii...."
         echo "this is just a test"
         sh 'npm install --no-audit'
       }
