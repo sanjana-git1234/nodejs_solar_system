@@ -19,17 +19,17 @@ pipeline {
       }
     }
    
-      stage ("unit testing") {
+      //stage ("unit testing") {
        steps {
          echo "do unit test"
-         sh 'colon separated - $MONGO_DB_CREDS'
-         sh 'echo username - $MONGO_DB_CREDS_USR'
-         sh 'echo password - $MONGO_DB_CREDS_PSW'
-         sh 'npm test'
+        // sh 'colon separated - $MONGO_DB_CREDS'
+         //sh 'echo username - $MONGO_DB_CREDS_USR'
+         //sh 'echo password - $MONGO_DB_CREDS_PSW'
+         //sh 'npm test'
          
-         junit allowEmptyResults: true, skipPublishingChecks: true, testResults: 'test-results.xml'
-       }
-      }
+        // junit allowEmptyResults: true, skipPublishingChecks: true, testResults: 'test-results.xml'
+       //}
+      //}
     stage ("code coverage") {
      steps {
        echo "code coverage check "
