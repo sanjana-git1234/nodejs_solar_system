@@ -45,12 +45,12 @@ pipeline {
         sshagent(['ssh-key']) {
         sh '''
         ssh -o StrictHostKeyChecking=no ec2-user@3.86.30.113
-        if sudo docker ps -a | grep -q "myapp"; then
+        if docker ps -a | grep -q "myapp"; then
         echo "container found..stopping..."
-        sudo docker stop "myapp" && sudo docker rm "myapp"
+        docker stop "myapp" && docker rm "myapp"
         echo "container stopped and removed"
         fi
-        sudo docker run --name myapp \
+        docker run --name myapp \
         -e MONGO_URI=$MONGO_URI \
         -e MONGO_USERNAME=$MONGO_USERNAME \
         -e MONGO_PASSWORD=$MONGO_PASSOWRD \
