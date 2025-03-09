@@ -20,7 +20,7 @@ pipeline {
     }
     stage ('build docker image') {
       steps {
-        sh ' docker build -t myapp:latest:$GIT_COMMIT .'
+        sh ' docker build -t myapp:$GIT_COMMIT .'
       }
     }
       
