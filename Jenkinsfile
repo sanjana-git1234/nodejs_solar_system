@@ -29,7 +29,13 @@ pipeline {
         
       }
     }
-      
+    stage ('docker push') {
+      steps {
+        withDockerRegistry(credentialsId: 'docker-credentials', url: "") {
+        sh 'docker push myapp:$GIT_COMMIT'
+      }
+    }
+    } 
 }
   }
 
