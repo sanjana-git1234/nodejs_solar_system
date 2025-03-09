@@ -27,8 +27,8 @@ pipeline {
          sh 'echo password - $MONGO_DB_CREDS_PSW'
          sh 'npm test'
          
-       }
          junit allowEmptyResults: true, skipPublishingChecks: true, testResults: 'test-results.xml'
+       }
       }
     stage ("code coverage") {
      steps {
