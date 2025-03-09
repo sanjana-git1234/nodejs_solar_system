@@ -44,7 +44,7 @@ pipeline {
         script {
         sshagent(['ssh-key']) {
         sh '''
-        ssh -o StrictHostKeyChecking=no deploy-key@3.86.30.113
+        ssh -o StrictHostKeyChecking=no ec2-user@3.86.30.113
         if sudo docker ps -a | grep -q "myapp"; then
         echo "container found..stopping..."
         sudo docker stop "myapp" && sudo docker rm "myapp"
