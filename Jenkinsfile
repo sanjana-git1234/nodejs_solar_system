@@ -23,6 +23,17 @@ pipeline {
         sh ' docker build -t myapp:$GIT_COMMIT .'
       }
     }
+    stage ('trivy scan') {
+      steps {
+        sh '
+        trivy image myapp:4e9cd12b3bd86d2dc0d4155a8313e661281a85ce \
+        --severity LOW,MEDIUM \
+        --exit-code 0 \
+        --quiet \
+        --format json -o trivy_error.json
+        '
+      }
+    }
       
 }
   }
