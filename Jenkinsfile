@@ -20,19 +20,19 @@ pipeline {
     }
     stage ('build docker image') {
       steps {
-        sh ' docker build -t myapp:$GIT_COMMIT .'
+        sh ' docker build -t sanju130/myapp:$GIT_COMMIT .'
       }
     }
     stage ('trivy scan') {
       steps {
-        sh 'trivy image myapp:4e9cd12b3bd86d2dc0d4155a8313e661281a85ce --severity LOW,MEDIUM --exit-code 0 --quiet --format json -o trivy_error.json'
+        sh 'trivy image sanju130/myapp:$GIT_COMMIT --severity LOW,MEDIUM --exit-code 0 --quiet --format json -o trivy_error.json'
         
       }
     }
     stage ('docker push') {
       steps {
         withDockerRegistry(credentialsId: 'docker-credentials', url: "") {
-        sh 'docker push myapp:$GIT_COMMIT'
+        sh 'docker push sanju130/myapp:$GIT_COMMIT'
       }
     }
     } 
