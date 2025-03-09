@@ -35,7 +35,32 @@ pipeline {
         sh 'docker push sanju130/myapp:$GIT_COMMIT'
       }
     }
-    } 
+    }
+    stage ('deploy in aws') {
+      when {
+       branch 'main'
+      }
+      steps {
+        script {
+        sshagent(['ssh-key']) {
+        sh '''
+        ssh -o StrictHostKeyChecking=no deploy-key@3.86.30.113
+        if sudo docker ps -a | grep -q "solar-system"; then
+        echo "container found..stopping..."
+        sudo docker stop "solar-system" && sudo docker rm "solar-system"
+        echo "container stopped and removed"
+        fi
+        sudo docker run --name solar-system \
+        -e MONGO_URI=$MONGO_URI \
+        -e MONGO_USERNAME=$MONGO_USERNAME \
+        -e MONGO_PASSWORD=$MONGO_PASSOWRD \
+        -p 3000:3000 -d sanju130/myapp:$GIT_COMMIT
+        '''
+      }
+        }
+      }
+      
+    }
 }
   }
 
