@@ -44,7 +44,7 @@ pipeline {
         script {
         sshagent(['ssh-key']) {
         sh '''
-        ssh -o StrictHostKeyChecking=no ec2-user@3.86.30.113
+        ssh -o StrictHostKeyChecking=no ec2-user@3.86.30.113 "
         if docker ps -a | grep -q "myapp"; then
         echo "container found..stopping..."
         docker stop "myapp" && docker rm "myapp"
@@ -55,6 +55,7 @@ pipeline {
         -e MONGO_USERNAME=$MONGO_USERNAME \
         -e MONGO_PASSWORD=$MONGO_PASSOWRD \
         -p 3000:3000 -d sanju130/myapp:$GIT_COMMIT
+        "
         '''
       }
         }
